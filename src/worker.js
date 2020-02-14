@@ -18,7 +18,7 @@ class Orbit {
     
     startingIPFS = async () => {
         window.ipfs = new IPFS({
-            // preload: { enabled: true, addresses: ['/dns4/node0.preload.ipfs.io/https'] },
+            // preload: { enabled: true , addresses: ['/dns4/node1.preload.ipfs.io/https'] },
             repo: './orbitdb/examples/ipfs',
             start: true,
             EXPERIMENTAL: {
@@ -28,6 +28,7 @@ class Orbit {
             config: {
                 "Bootstrap": [
                     MASTER_MULTIADDR
+                    ,'/ip4/54.191.195.43/tcp/4001/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN'
                   // Leave this blank for now. We'll need it later
                 ]
             },
@@ -88,7 +89,7 @@ class Orbit {
             // const entry = { avatar: creatures[index], userId: userId }
             // console.log(`Adding ${entry.avatar} ${entry.userId} to DB.`)
             await db.add(entry)
-            await db.events.on('replicated',()=>{console.log('Replication fired!!!')})
+            await db.events.on('replicated',()=>{console.log('Replication fired@@@!!!')})
             const latest = db.iterator({ limit: -1 }).collect()
             // let output = ``
             // output += `[Latest Visitors]\n`

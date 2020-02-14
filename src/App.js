@@ -11,8 +11,8 @@ class App extends Component {
     userId : '',
     msg : '',
     Latest : null,
-    loading :true
-    
+    loading :true,
+    count:0
   };
   constructor(props){
     super(props)
@@ -30,12 +30,12 @@ class App extends Component {
       console.log('Starting ipfs')
       Obj.startingIPFS().then((obj) => {
         db=obj
-        console.log(db)
+        // console.log(db)
         const latest = db.iterator({ limit: -1 }).collect()
-        this.setState({ Latest: latest });
-        this.setState({loading : false})
-        console.log('TTTT'+Obj.gettingId())
-        this.setState({userId:Obj.gettingId()})
+        this.setState({ Latest: latest,loading : false,userId:Obj.gettingId() });
+        // this.setState({loading : false})
+        // console.log('TTTT'+Obj.gettingId())
+        // this.setState({userId:Obj.gettingId()})
         console.log("DB Instantiated"+db)
       }).catch((err) => {
         console.log(err)
@@ -48,13 +48,29 @@ class App extends Component {
 
   onReplication = () => {
     
-        console.log("hello###"+db)
+        // console.log("hello###"+db)
         db.events.on('replicated',()=>{
-        console.log('Replication fired!!!')
+        
+        // console.log('Replication fired!!!')
         const latest = db.iterator({ limit: -1 }).collect()
-        this.setState({ Latest: latest });
+        if(latest.length>this.state.count)
+        {
+          console.log(latest.length)
+          console.log('Replication fired and setting state')
+          this.setState({ Latest: latest ,count:latest.length});
+        }
+        
+        // this.setState({ Latest: latest})
+        
+        // setInterval(this.setLatest(latest),1000*15)
+        
     })
+    // setInterval(,1000*5)
   }
+  // setLatest=(result)=>{
+  //   console.log('Replication fired and setting state')
+    
+  // }
 
   renderComment(){
     return this.state.Latest.map((e)=>{
@@ -65,15 +81,15 @@ class App extends Component {
     event.preventDefault();
     console.log('on submit%%%')
     const entry={userId:this.state.userId, msg:this.state.msg}
-    console.log(entry)
+    // console.log(entry)
     // const entry1 = Obj.addingToDB(entry)
 
     
     Obj.addingToDB(entry).then((result) => {
       
       console.log('result is '+result)
-      const output = result.reverse().map((e) => e.payload.value.userId + ' | ' + e.payload.value.avatar + ')').join('\n') + `\n`
-      console.log(output)
+      // const output = result.reverse().map((e) => e.payload.value.userId + ' | ' + e.payload.value.avatar + ')').join('\n') + `\n`
+      // console.log(output)
       this.setState({Latest:result})
     }).catch((err) => {
       console.log(err)
@@ -90,7 +106,7 @@ class App extends Component {
       <header >
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
       </header>
-      <body><p>{this.renderComment()}</p></body>
+      <body>{this.renderComment()}</body>
         <footer>
             <Form onSubmit={this.onSubmit}>
               <Input
