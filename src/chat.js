@@ -9,7 +9,7 @@ export default class chat extends Component{
             <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
             <Comment.Content>
                 <Comment.Author>{this.props.latest.userId}</Comment.Author>
-                
+                <Comment.Metadata><div>on {this.props.latest.date} at {this.props.latest.time}</div></Comment.Metadata>
                 <Comment.Text>
                     <p>
                         {this.props.latest.msg}

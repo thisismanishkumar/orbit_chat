@@ -3,6 +3,7 @@ import Orbit from '../src/worker';
 import React, {Component} from 'react';
 import { Form,Input,Button } from 'semantic-ui-react'
 import Chat from '../src/chat';
+import { animateScroll as scroll} from 'react-scroll'
 
 let Obj,db;
 class App extends Component {
@@ -58,6 +59,7 @@ class App extends Component {
           console.log(latest.length)
           console.log('Replication fired and setting state')
           this.setState({ Latest: latest ,count:latest.length});
+          scroll.scrollToBottom();
         }
         
         // this.setState({ Latest: latest})
@@ -79,11 +81,15 @@ class App extends Component {
   }
   onSubmit = async(event) => {
     event.preventDefault();
+    var today = new Date();
+    var date = today.getDate()+'/'+today.getMonth()+'/'+today.getFullYear();
+    var time = today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
+    console.log(date+' '+time)
     console.log('on submit%%%')
-    const entry={userId:this.state.userId, msg:this.state.msg}
+    const entry={userId:this.state.userId, msg:this.state.msg, date:date, time:time}
     // console.log(entry)
     // const entry1 = Obj.addingToDB(entry)
-
+    this.setState({msg:''})
     
     Obj.addingToDB(entry).then((result) => {
       
@@ -91,6 +97,7 @@ class App extends Component {
       // const output = result.reverse().map((e) => e.payload.value.userId + ' | ' + e.payload.value.avatar + ')').join('\n') + `\n`
       // console.log(output)
       this.setState({Latest:result})
+      scroll.scrollToBottom();
     }).catch((err) => {
       console.log(err)
     });
