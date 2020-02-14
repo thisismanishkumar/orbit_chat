@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import Orbit from '../src/worker';
 import React, {Component} from 'react';
 import { Form,Input,Button } from 'semantic-ui-react'
@@ -74,11 +74,29 @@ class App extends Component {
     
   // }
 
+  restartSetState=(Latest)=>{
+    this.setState({Latest})
+    scroll.scrollToBottom();
+  }
+
   renderComment(){
+    
     return this.state.Latest.map((e)=>{
-        return <Chat latest = {e.payload.value}/>
+        return <Chat latest = {e.payload.value} userId={this.state.userId} obj = {this.Obj} callback={this.restartSetState}/>
     })
   }
+
+  addingToOrbitDb = async(entry) => {
+    Obj.addingToDB(entry).then((result) => {
+      
+      console.log('result is '+result)
+      this.setState({Latest:result})
+      scroll.scrollToBottom();
+    }).catch((err) => {
+      console.log(err)
+    });
+  }
+
   onSubmit = async(event) => {
     event.preventDefault();
     var today = new Date();
@@ -86,22 +104,15 @@ class App extends Component {
     var time = today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
     console.log(date+' '+time)
     console.log('on submit%%%')
-    const entry={userId:this.state.userId, msg:this.state.msg, date:date, time:time}
+    console.log('this.state.userId'+this.state.userId)
+    const entry={reply:false,userId:this.state.userId, msg:this.state.msg, date:date, time:time}
     // console.log(entry)
     // const entry1 = Obj.addingToDB(entry)
+    // count++
     this.setState({msg:''})
-    
-    Obj.addingToDB(entry).then((result) => {
-      
-      console.log('result is '+result)
-      // const output = result.reverse().map((e) => e.payload.value.userId + ' | ' + e.payload.value.avatar + ')').join('\n') + `\n`
-      // console.log(output)
-      this.setState({Latest:result})
-      scroll.scrollToBottom();
-    }).catch((err) => {
-      console.log(err)
-    });
+    this.addingToOrbitDb(entry)
   }
+  
   render() {
     if(!this.state.loading){
       console.log('***')
@@ -113,7 +124,7 @@ class App extends Component {
       <header >
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
       </header>
-      <body>{this.renderComment()}</body>
+      {this.renderComment()}
         <footer>
             <Form onSubmit={this.onSubmit}>
               <Input
@@ -137,11 +148,12 @@ class App extends Component {
       </header>
       <body><p>No such Messages</p></body>
         <footer>
-            <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={this.onSubmit} >
               <Input
                 value={this.state.msg}
                 onChange={event => this.setState({msg: event.target.value})}
                 placeholder='Enter some Text'
+                
               /> 
               <Button primary >Send</Button>
             </Form>
