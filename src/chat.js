@@ -21,9 +21,11 @@ export default class chat extends Component {
     }
 
     checkUser = () => {
+        console.log('&&& msg user id  ' + this.props.latest.userId + ' curr userid ' + this.props.userId)
         if (this.props.latest.userId === this.props.userId)
-            return 'right'
-        else return 'left'
+            return true
+        else 
+        return false
 
     }
 
@@ -32,6 +34,7 @@ export default class chat extends Component {
         var today = new Date();
         var date = today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear();
         var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        if(this.state.msg!==''){
         const entry = { reply: true, replyOfUserId: this.props.latest.userId, replyOfMsg: this.props.latest.msg, replyOfMsgDate: this.props.latest.date, replyOfMsgTime: this.props.latest.time, userId: this.props.userId, msg: this.state.msg, date: date, time: time }
         
         wk.addingToDB(entry).then((result) => {
@@ -42,14 +45,14 @@ export default class chat extends Component {
         }).catch((err) => {
             console.log(err)
         });
-
+    }
     }
     render() {
         if (this.props.latest.reply) {
-            console.log('msg user id' + this.props.latest.userId + ' curr userid ' + this.props.userId)
+            console.log('@@@msg user id  ' + this.props.latest.userId + ' curr userid ' + this.props.userId)
             return (
                 <Grid>
-                    <Grid.Column floated={this.checkUser} width={5}>
+                    <Grid.Column floated={this.checkUser() ? 'right':'left'} width={5}>
                         <Comment.Group>
                             <Comment key={this.props.latest.time + this.props.latest.date + this.props.latest.userId + this.props.latest.msg}>
                                 <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
@@ -95,7 +98,7 @@ export default class chat extends Component {
             console.log('msg user id' + this.props.latest.userId + ' curr userid ' + this.props.userId)
             return (
                 <Grid>
-                    <Grid.Column floated={this.checkUser} width={5}>
+                    <Grid.Column floated={this.checkUser() ? 'right':'left'} width={5}>
                         <Comment.Group>
                             <Comment key={this.props.latest.time + this.props.latest.date + this.props.latest.userId + this.props.latest.msg}>
                                 <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />

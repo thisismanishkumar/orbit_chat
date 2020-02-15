@@ -105,12 +105,13 @@ class App extends Component {
     console.log(date+' '+time)
     console.log('on submit%%%')
     console.log('this.state.userId'+this.state.userId)
+    if(this.state.msg!==''){
     const entry={reply:false,userId:this.state.userId, msg:this.state.msg, date:date, time:time}
     // console.log(entry)
     // const entry1 = Obj.addingToDB(entry)
     // count++
     this.setState({msg:''})
-    this.addingToOrbitDb(entry)
+    this.addingToOrbitDb(entry)}
   }
   
   render() {
