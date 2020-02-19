@@ -1,8 +1,8 @@
 const IPFS = require('ipfs')
 const OrbitDB = require('orbit-db')
+// Edit here
 const MASTER_MULTIADDR = '/ip4/54.191.195.43/tcp/4002/ws/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN'
-// const MASTER_MULTIADDR= '/dns4/ws-star.discovery.libp2p.io/wss/p2p-websocket-star/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN'
-// /ip4/172.29.38.17/tcp/4002/ipfs/QmTAzJVyka9KStvBiGcB2xs8ByBJRL34KeaM9atMEHUbjf
+// Edit here
 const DB_ADDRESS = '/orbitdb/zdpuAszhMs3RjB8QyBG1e2mDnB2pbUgQ2j1RVBqSExpDk5355/example881'
 let db,orbitdb,identity;
 
@@ -29,10 +29,6 @@ class Orbit {
                 "Bootstrap": [
                     MASTER_MULTIADDR,
                     '/ip4/54.191.195.43/tcp/4001/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN',
-                    // '/dnsaddr/bootstrap.libp2p.io/ipfs/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
-                    // "/dnsaddr/bootstrap.libp2p.io/ipfs/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
-                    // "/dnsaddr/bootstrap.libp2p.io/ipfs/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
-                    // "/dnsaddr/bootstrap.libp2p.io/ipfs/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
                     "/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
                     "/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM",
                     "/ip4/128.199.219.111/tcp/4001/ipfs/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu",
@@ -66,12 +62,7 @@ class Orbit {
                 window.ipfs.on("replicated", () => {
                     console.log(`replication event fired`);
                 })   
-                // Make the DB public, so that anyone can write.
-                // const options = {
-                //     accessController: {
-                //         write: ["*"]
-                //     }
-                // }
+                
                 console.log('orbit instantiated')
                 console.log(orbitdb.identity.id)
                 identity = orbitdb.identity.id
@@ -84,31 +75,23 @@ class Orbit {
                 this.onReplication()
                 return db
                 
-                // await db.events.on('replicated',()=>{console.log('Replication fired!!!')})
+             
             } catch (e) {
                 console.log('eroooor')
                 console.error(e)
                 process.exit(1)
             }
-        // })
+       
     }
     
     addingToDB = async (entry) => {
-        // const index = Math.floor(Math.random() * creatures.length)
-        // const userId = Math.floor(count+100)
+        
         // count+=100
         try {
-            // const entry = { avatar: creatures[index], userId: userId }
-            // console.log(`Adding ${entry.avatar} ${entry.userId} to DB.`)
             await db.add(entry)
             await db.events.on('replicated',()=>{console.log('Replication fired@@@!!!')})
             const latest = db.iterator({ limit: -1 }).collect()
-            // let output = ``
-            // output += `[Latest Visitors]\n`
-            // output += `--------------------\n`
-            // output += `ID  | Visitor\n`
-            // output += `--------------------\n`
-            // output += latest.reverse().map((e) => e.payload.value.userId + ' | ' + e.payload.value.avatar + ')').join('\n') + `\n`
+            
             console.log('worker addding to db')
             console.log(latest)
             return latest ;
