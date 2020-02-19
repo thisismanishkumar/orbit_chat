@@ -1,16 +1,9 @@
 const IPFS = require('ipfs')
 const OrbitDB = require('orbit-db')
-<<<<<<< HEAD
-const MASTER_MULTIADDR = '/ip4/54.191.195.43/tcp/4002/ws/ipfs/QmcXiR8orfLp23BY9SDFw5XsuhHfHHzC3YcyfjB3iNsvYG'
-// const MASTER_MULTIADDR= '/dns4/ws-star.discovery.libp2p.io/wss/p2p-websocket-star/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN'
-// /ip4/172.29.38.17/tcp/4002/ipfs/QmTAzJVyka9KStvBiGcB2xs8ByBJRL34KeaM9atMEHUbjf
-const DB_ADDRESS = "/orbitdb/zdpuAxi5sJikx8EQCMTzw9oxihdGLRmu6HDU87ucdAXubiNwz/Test1"
-=======
 // Edit here
 const MASTER_MULTIADDR = '/ip4/54.191.195.43/tcp/4002/ws/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN'
 // Edit here
 const DB_ADDRESS = '/orbitdb/zdpuAszhMs3RjB8QyBG1e2mDnB2pbUgQ2j1RVBqSExpDk5355/example881'
->>>>>>> e6d385d835017dc8cf8867095a0c16bc6e044c1c
 let db,orbitdb,identity;
 
 class Orbit {
@@ -35,15 +28,7 @@ class Orbit {
             config: {
                 "Bootstrap": [
                     MASTER_MULTIADDR,
-<<<<<<< HEAD
-                    '/ip4/54.191.195.43/tcp/4001/ipfs/QmcXiR8orfLp23BY9SDFw5XsuhHfHHzC3YcyfjB3iNsvYG',
-                    // '/dnsaddr/bootstrap.libp2p.io/ipfs/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
-                    // "/dnsaddr/bootstrap.libp2p.io/ipfs/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
-                    // "/dnsaddr/bootstrap.libp2p.io/ipfs/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
-                    // "/dnsaddr/bootstrap.libp2p.io/ipfs/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
-=======
                     '/ip4/54.191.195.43/tcp/4001/ipfs/QmTQ1ttKqWxwWNTrqF1Qv2Pg92kDwL7bkrrPhXdgXwMTQN',
->>>>>>> e6d385d835017dc8cf8867095a0c16bc6e044c1c
                     "/ip4/104.131.131.82/tcp/4001/ipfs/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ",
                     "/ip4/104.236.179.241/tcp/4001/ipfs/QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM",
                     "/ip4/128.199.219.111/tcp/4001/ipfs/QmSoLSafTMBsPKadTEgaXctDQVcqN88CNLHXMkTNwMKPnu",
