@@ -74,7 +74,7 @@ class App extends Component {
     
   // }
 
-  restartSetState=(Latest)=>{
+  restartSetState(Latest){
     this.setState({Latest})
     scroll.scrollToBottom();
   }
