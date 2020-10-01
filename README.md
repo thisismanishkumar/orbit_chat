@@ -7,3 +7,5 @@
 ## Screenshots:-
 ![alt text](https://github.com/thisismanishkumar/orbit_chat/blob/master/Screenshot%20from%202020-02-20%2000-14-54.png)
 
+## Contributors :-
+1. Manish Kumar
